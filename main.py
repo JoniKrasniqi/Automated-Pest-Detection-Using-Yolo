@@ -6,13 +6,18 @@ import os
 from datetime import datetime
 import plotly.express as px
 import pandas as pd
+import pathlib
+
+temp = pathlib.PosixPath
+pathlib.PosixPath = pathlib.WindowsPath
 
 # --- App Configuration ---
 st.set_page_config(
     page_title="Pest Detection System",
     layout="wide",
+    page_icon="🐞",  # Bug icon for pest relevance
 )
- 
+
 # --- Initialize Results Storage ---
 if "results" not in st.session_state:
     st.session_state["results"] = []
@@ -113,6 +118,7 @@ elif tabs == "📄 Upload Image":
     st.markdown("## Upload an Image for Pest Detection")
     st.markdown("### Detectable Pests:")
 
+    # Enhanced display of detectable pests
     cols = st.columns(4)
     for idx, pest in enumerate(DETECTABLE_PESTS):
         with cols[idx % 4]:
@@ -122,6 +128,7 @@ elif tabs == "📄 Upload Image":
                 </div>
             """, unsafe_allow_html=True)
 
+    # Updated to include 'jfif' in allowed file types
     uploaded_file = st.file_uploader("Choose an image (jpg, jpeg, png, jfif):", type=["jpg", "jpeg", "png", "jfif"])
 
     if uploaded_file:
@@ -156,7 +163,7 @@ elif tabs == "📄 Upload Image":
 
                         # Extract pests detected and their confidences
                         pests_detected = detected_objects[['name', 'confidence']]
-                    
+                        # Improve the results display
                         st.markdown("### Pests Detected:")
                         for idx, row in pests_detected.iterrows():
                             st.markdown(f"""
@@ -227,6 +234,7 @@ elif tabs == "📊 Analytics":
 
         if not df.empty:
             st.markdown("### Detection History Over Time")
+            # Use a bar chart for simplicity
             detection_counts = df.groupby(['timestamp', 'pest_name']).size().reset_index(name='Counts')
             fig_time = px.bar(detection_counts, x='timestamp', y='Counts', color='pest_name', title='Pest Detections Over Time')
             st.plotly_chart(fig_time, use_container_width=True)
