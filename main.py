@@ -1,12 +1,14 @@
 import streamlit as st
 from PIL import Image, UnidentifiedImageError
+import torch
 import numpy as np
 import os
 from datetime import datetime
 import plotly.express as px
 import pandas as pd
-# Remove the pathlib override
+# Removed pathlib override
 # import pathlib
+
 # temp = pathlib.PosixPath
 # pathlib.PosixPath = pathlib.WindowsPath
 
@@ -46,27 +48,22 @@ DETECTABLE_PESTS = [
     "Yellow Rice Borer",
 ]
 
-# Remove custom torch cache directory settings
+# Removed custom torch cache directory settings
 # os.environ["TORCH_HOME"] = "/tmp/torch"  # Use a temporary directory
 
 MODEL_PATH = "best.pt"
 
 # --- Load YOLOv5 Model ---
-from ultralytics import YOLO
-
 @st.cache_resource
 def load_model(model_path):
     try:
-        model = YOLO(model_path)
+        # Removed torch.hub.set_dir("/tmp/torch")
+        # Load YOLOv5 model
+        model = torch.hub.load("ultralytics/yolov5", "custom", path=model_path, force_reload=True)
         return model
     except Exception as e:
         st.error(f"Error loading YOLOv5 model: {e}")
         return None
-
-# Load the model
-model = load_model(MODEL_PATH)
-if model is None:
-    st.stop()
 
 # --- Home Page ---
 if tabs == "🏠 Home":
@@ -81,7 +78,7 @@ if tabs == "🏠 Home":
         total_pests_detected = sum(len(result['pests']) for result in st.session_state["results"])
         st.markdown('<div class="card"><div class="card-header">🐛 Pests Detected</div><p class="metric">{}</p></div>'.format(total_pests_detected), unsafe_allow_html=True)
     with col3:
-        st.markdown('<div class="card"><div class="card-header">🧠 Model Version</div><p class="metric">YOLOv5</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="card"><div class="card-header">🧠 Model Version</div><p class="metric">YOLOv5s</p></div>', unsafe_allow_html=True)
 
     st.markdown("<p class='footer'>© 2024 Pest Detection System. All rights reserved.</p>", unsafe_allow_html=True)
 
@@ -109,34 +106,35 @@ elif tabs == "📄 Upload Image":
 
             if st.button("Run Detection"):
                 with st.spinner("Running YOLOv5 Inference..."):
-                    image_np = np.array(image)
+                    if not os.path.exists(MODEL_PATH):
+                        st.error(f"Model file not found: {MODEL_PATH}")
+                        st.stop()
 
-                    # Perform inference
+                    model = load_model(MODEL_PATH)
+                    if model is None:
+                        st.stop()
+
+                    image_np = np.array(image)
                     results = model(image_np)
 
-                    if not results or results[0].boxes.shape[0] == 0:
+                    detected_objects = results.pandas().xyxy[0]
+                    if detected_objects.empty:
                         st.warning("No detectable pests found in the uploaded image.")
                     else:
-                        # Render results
-                        annotated_image = results[0].plot()
+                        detected_image_np = results.render()[0]
+                        detected_image = Image.fromarray(detected_image_np)
                         st.success("Detection complete!")
-                        st.image(annotated_image, caption="Detection Results", use_container_width=True)
+                        st.image(detected_image, caption="Detection Results", use_container_width=True)
 
-                        # Extract detected pests
-                        pests_detected = []
-                        for box in results[0].boxes:
-                            pests_detected.append({
-                                'name': model.names[int(box.cls)],
-                                'confidence': float(box.conf),
-                            })
-
-                        # Display detected pests
+                        # Extract pests detected and their confidences
+                        pests_detected = detected_objects[['name', 'confidence']]
+                        # Improve the results display
                         st.markdown("### Pests Detected:")
-                        for pest in pests_detected:
+                        for idx, row in pests_detected.iterrows():
                             st.markdown(f"""
                                 <div class="result-card">
-                                    <h4>{pest['name']}</h4>
-                                    <p>Confidence Level: {pest['confidence']:.2f}</p>
+                                    <h4>{row['name']}</h4>
+                                    <p>Confidence Level: {row['confidence']:.2f}</p>
                                 </div>
                             """, unsafe_allow_html=True)
 
@@ -144,8 +142,8 @@ elif tabs == "📄 Upload Image":
                         st.session_state["results"].append({
                             "filename": uploaded_file.name,
                             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                            "pests": pests_detected,
-                            "image": Image.fromarray(annotated_image),
+                            "pests": pests_detected.to_dict(orient='records'),
+                            "image": detected_image,
                         })
         except UnidentifiedImageError:
             st.error("The uploaded file is not a valid image. Please upload a valid image file.")
