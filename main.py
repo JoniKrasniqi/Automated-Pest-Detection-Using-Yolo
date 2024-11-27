@@ -15,7 +15,7 @@ pathlib.PosixPath = pathlib.WindowsPath
 st.set_page_config(
     page_title="Pest Detection System",
     layout="wide",
-    page_icon="🐞",  # Bug icon for pest relevance
+    page_icon="🐞",  
 )
 
 # --- Initialize Results Storage ---
@@ -83,6 +83,8 @@ DETECTABLE_PESTS = [
     "White Backed Plant Hopper",
     "Yellow Rice Borer",
 ]
+# Set custom torch cache directory
+os.environ["TORCH_HOME"] = "/tmp/torch"  # Use a temporary directory
 MODEL_PATH = "best.pt"
 # --- Load YOLOv5 Model ---
 @st.cache_resource
@@ -118,7 +120,6 @@ elif tabs == "📄 Upload Image":
     st.markdown("## Upload an Image for Pest Detection")
     st.markdown("### Detectable Pests:")
 
-    # Enhanced display of detectable pests
     cols = st.columns(4)
     for idx, pest in enumerate(DETECTABLE_PESTS):
         with cols[idx % 4]:
@@ -128,7 +129,7 @@ elif tabs == "📄 Upload Image":
                 </div>
             """, unsafe_allow_html=True)
 
-    # Updated to include 'jfif' in allowed file types
+    
     uploaded_file = st.file_uploader("Choose an image (jpg, jpeg, png, jfif):", type=["jpg", "jpeg", "png", "jfif"])
 
     if uploaded_file:
