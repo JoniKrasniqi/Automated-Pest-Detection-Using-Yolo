@@ -83,7 +83,7 @@ DETECTABLE_PESTS = [
     "White Backed Plant Hopper",
     "Yellow Rice Borer",
 ]
-
+MODEL_PATH = "best.pt"
 # --- Load YOLOv5 Model ---
 @st.cache_resource
 def load_model(model_path):
@@ -94,7 +94,7 @@ def load_model(model_path):
         st.error(f"Error loading YOLOv5 model: {e}")
         return None
 
-MODEL_PATH = "best.pt"
+
 
 # --- Home Page ---
 if tabs == "🏠 Home":
