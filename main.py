@@ -90,9 +90,12 @@ MODEL_PATH = "best.pt"
 @st.cache_resource
 def load_model(model_path):
     try:
+<<<<<<< HEAD
         # Set writable cache directory
         torch.hub.set_dir("/tmp/torch")
         # Load YOLOv5 model
+=======
+>>>>>>> 1e8ad49879ef4aa45809124b1fbe490270af11ac
         model = torch.hub.load("ultralytics/yolov5", "custom", path=model_path, force_reload=True)
         return model
     except Exception as e:
