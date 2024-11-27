@@ -6,11 +6,6 @@ import os
 from datetime import datetime
 import plotly.express as px
 import pandas as pd
-# Removed pathlib override
-# import pathlib
-
-# temp = pathlib.PosixPath
-# pathlib.PosixPath = pathlib.WindowsPath
 
 # --- App Configuration ---
 st.set_page_config(
@@ -26,7 +21,44 @@ if "results" not in st.session_state:
 # --- Custom CSS for Styling ---
 st.markdown("""
     <style>
-    /* Your existing CSS styles */
+    .main { background-color: #fafafa; }
+    .title { font-size: 48px; font-weight: bold; text-align: center; color: #1f4e79; margin-bottom: 20px; }
+    .subheader { font-size: 16px; text-align: center; color: #444; margin-bottom: 20px; }
+    .footer { font-size: 13px; text-align: center; color: #888; margin-top: 30px; }
+    .card {
+        background-color: white;
+        padding: 20px;
+        margin: 10px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    .card h3 { color: #1f4e79; margin-bottom: 10px; }
+    .stButton>button {
+        background-color: #1f4e79 !important;
+        color: white !important;
+        border-radius: 8px !important;
+    }
+    .metric { font-size: 24px; font-weight: bold; color: #1f4e79; }
+    .pest-grid { display: flex; flex-wrap: wrap; justify-content: center; }
+    .pest-card {
+        background-color: #fff;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        width: 200px;
+        text-align: center;
+    }
+    .pest-card h4 { color: #1f4e79; font-size: 18px; margin-bottom: 5px; }
+    .result-card {
+        background-color: white;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .result-card h4 { color: #1f4e79; margin-bottom: 10px; }
     </style>
 """, unsafe_allow_html=True)
 
@@ -47,23 +79,23 @@ DETECTABLE_PESTS = [
     "White Backed Plant Hopper",
     "Yellow Rice Borer",
 ]
-
-# Removed custom torch cache directory settings
-# os.environ["TORCH_HOME"] = "/tmp/torch"  # Use a temporary directory
-
+# Set custom torch cache directory
+os.environ["TORCH_HOME"] = "/tmp/torch"  # Use a temporary directory
 MODEL_PATH = "best.pt"
-
 # --- Load YOLOv5 Model ---
 @st.cache_resource
 def load_model(model_path):
     try:
-        # Removed torch.hub.set_dir("/tmp/torch")
+        # Set writable cache directory
+        torch.hub.set_dir("/tmp/torch")
         # Load YOLOv5 model
         model = torch.hub.load("ultralytics/yolov5", "custom", path=model_path, force_reload=True)
         return model
     except Exception as e:
         st.error(f"Error loading YOLOv5 model: {e}")
         return None
+
+
 
 # --- Home Page ---
 if tabs == "🏠 Home":
@@ -96,12 +128,15 @@ elif tabs == "📄 Upload Image":
                 </div>
             """, unsafe_allow_html=True)
 
+    
     uploaded_file = st.file_uploader("Choose an image (jpg, jpeg, png, jfif):", type=["jpg", "jpeg", "png", "jfif"])
 
     if uploaded_file:
         try:
-            # Open and display the uploaded image
-            image = Image.open(uploaded_file).convert('RGB')
+            # Try to open the image to check if it's a valid image file
+            image = Image.open(uploaded_file)
+            image.verify()  # Verify that it is, in fact, an image
+            image = Image.open(uploaded_file)  # Reopen since verify() closes the file
             st.image(image, caption="Uploaded Image", use_container_width=True)
 
             if st.button("Run Detection"):
@@ -114,7 +149,7 @@ elif tabs == "📄 Upload Image":
                     if model is None:
                         st.stop()
 
-                    image_np = np.array(image)
+                    image_np = np.array(image.convert('RGB'))
                     results = model(image_np)
 
                     detected_objects = results.pandas().xyxy[0]
