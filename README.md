@@ -36,11 +36,13 @@ An AI-powered application that utilizes **YOLOv5** for real-time pest detection 
 ## Demo
 ### Streamlit application
 https://pestdetector.streamlit.app/
-
+#### First upload an image that contains one of the pests mentioned
 <img width="958" alt="uploadimage" src="https://github.com/user-attachments/assets/34610b72-6d27-4223-9f43-0e1f771a43c6">
 
+#### After uploading click run detection
 <img width="960" alt="uploadedimage" src="https://github.com/user-attachments/assets/1f3996b3-5936-4b19-981f-d4e9066feba9">
 
+#### The result with the pest detected and confidence level
 <img width="960" alt="detectioncomplete" src="https://github.com/user-attachments/assets/82eb6766-cf2a-4ba9-9d37-0a190270f2d5">
 
 
