@@ -34,4 +34,4 @@ An AI-powered application that utilizes YOLOv5 for real-time pest detection in a
 - Model Integration: Utilizes a custom-trained YOLOv5 model for accurate and efficient pest detection.
 
 ## Demo
-pestdetector.streamlit.app
+(https://pestdetector.streamlit.app/)
