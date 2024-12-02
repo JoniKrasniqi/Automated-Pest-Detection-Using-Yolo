@@ -1,5 +1,5 @@
 # 🐞 Automated Pest Detection System
-An AI-powered application that utilizes YOLOv5 for real-time pest detection in agricultural images, integrated into an interactive web application using Streamlit. This system assists farmers and agricultural professionals in early pest detection, promoting sustainable farming practices by reducing crop losses and minimizing pesticide usage.
+An AI-powered application that utilizes **YOLOv5** for real-time pest detection in agricultural images, integrated into an interactive web application using **Streamlit**. This system assists farmers and agricultural professionals in early pest detection, promoting sustainable farming practices by reducing crop losses and minimizing pesticide usage.
 
 ## Table of Contents
   - Features
@@ -34,4 +34,13 @@ An AI-powered application that utilizes YOLOv5 for real-time pest detection in a
 - Model Integration: Utilizes a custom-trained YOLOv5 model for accurate and efficient pest detection.
 
 ## Demo
-(https://pestdetector.streamlit.app/)
+https://pestdetector.streamlit.app/
+
+<img width="958" alt="uploadimage" src="https://github.com/user-attachments/assets/34610b72-6d27-4223-9f43-0e1f771a43c6">
+
+<img width="960" alt="uploadedimage" src="https://github.com/user-attachments/assets/1f3996b3-5936-4b19-981f-d4e9066feba9">
+
+<img width="960" alt="detectioncomplete" src="https://github.com/user-attachments/assets/82eb6766-cf2a-4ba9-9d37-0a190270f2d5">
+
+
+
