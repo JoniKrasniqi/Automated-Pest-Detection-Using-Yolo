@@ -60,12 +60,12 @@ https://pestdetector.streamlit.app/
 Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
 
 ## License
-This project is licensed under the MIT License.
+This project is licensed under the **MIT** License.
 
 ## Acknowledgments
-  - Ultralytics: For developing YOLOv5 and providing an open-source object detection framework.
-  - Streamlit: For enabling rapid development of interactive web applications.
-  - Contributors: Everyone who has contributed to improving this project.
+  - **Ultralytics**: For developing **YOLOv5** and providing an open-source object detection framework.
+  - **Streamlit**: For enabling rapid development of interactive web applications.
+  - **Contributors**: Everyone who has contributed to improving this project.
 
 
 ## Future Work
