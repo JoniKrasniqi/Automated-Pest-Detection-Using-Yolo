@@ -38,5 +38,38 @@ https://pestdetector.streamlit.app/
 ##### 3. The result with the pest detected and confidence level
 <img width="960" alt="detectioncomplete" src="https://github.com/user-attachments/assets/82eb6766-cf2a-4ba9-9d37-0a190270f2d5">
 
+## Installation
+### Prerequisites
+      - Python 3.7 or higher
+      - Git
+### Cloning the Repository
+
+      git clone https://github.com/JoniKrasniqi/Automated-Pest-Detection-Using-Yolo
+      cd Automated-Pest-Detection-Using-Yolo
+
+### Installing Dependencies
+##### Python Dependencies
+        Install the required Python packages using pip:
+        pip install -r requirements.txt
+
+### Run the app locally
+        streamlit run main.py
 
 
+## Contributing
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
+
+## License
+This project is licensed under the MIT License.
+
+## Acknowledgments
+  - Ultralytics: For developing YOLOv5 and providing an open-source object detection framework.
+  - Streamlit: For enabling rapid development of interactive web applications.
+  - Contributors: Everyone who has contributed to improving this project.
+
+
+## Future Work
+  - Expand Pest Library: Incorporate additional pest species to enhance the system's utility.
+  - Mobile Deployment: Develop a mobile application for field use by farmers.
+  - Integration with IoT Devices: Connect with drones or cameras for continuous monitoring.
+  - Predictive Analytics: Incorporate environmental data to predict pest infestations.
