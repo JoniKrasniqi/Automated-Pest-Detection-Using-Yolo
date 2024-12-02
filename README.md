@@ -19,8 +19,8 @@ An AI-powered application that utilizes YOLOv5 for real-time pest detection in a
 ## Features
 - Real-time Pest Detection: Upload images and get instant detection results with annotated bounding boxes and labels.
 - Comprehensive Pest Library: Detects ten common agricultural pests:
-- - Armyworm
-- - Legume Blister Beetle
+  - Armyworm
+  - Legume Blister Beetle
 Red Spider
 Rice Gall Midge
 Rice Leaf Roller
