@@ -21,14 +21,17 @@ An AI-powered application that utilizes YOLOv5 for real-time pest detection in a
 - Comprehensive Pest Library: Detects ten common agricultural pests:
   - Armyworm
   - Legume Blister Beetle
-Red Spider
-Rice Gall Midge
-Rice Leaf Roller
-Rice Leafhopper
-Rice Water Weevil
-Wheat Phloeothrips
-White Backed Plant Hopper
-Yellow Rice Borer
-Analytics Dashboard: Monitor pest detection trends over time, including most frequently detected pests and detection history.
-User-friendly Interface: Intuitive design with easy navigation and responsive layout.
-Model Integration: Utilizes a custom-trained YOLOv5 model for accurate and efficient pest detection.
+  - Red Spider
+  - Rice Gall Midge
+  - Rice Leaf Roller
+  - Rice Leafhopper
+  - Rice Water Weevil
+  - Wheat Phloeothrips
+  - White Backed Plant Hopper
+  - Yellow Rice Borer
+- Analytics Dashboard: Monitor pest detection trends over time, including most frequently detected pests and detection history.
+- User-friendly Interface: Intuitive design with easy navigation and responsive layout.
+- Model Integration: Utilizes a custom-trained YOLOv5 model for accurate and efficient pest detection.
+
+## Demo
+pestdetector.streamlit.app
