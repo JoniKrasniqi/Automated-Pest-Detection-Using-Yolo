@@ -65,9 +65,8 @@ This project is licensed under the **MIT** License.
 ## Acknowledgments
   - This project utilizes the [YOLOv5](https://github.com/ultralytics/yolov5) object detection algorithm developed by [Ultralytics](https://ultralytics.com). We thank the developers for their valuable contribution to the open-source community.
 
-If you use YOLOv5 in your research or development, please cite it as follows:
+If you use **YOLOv5** in your research or development, please cite it as follows:
 
-```bibtex
 @software{yolov5,
   title = {Ultralytics YOLOv5},
   author = {Glenn Jocher},
@@ -80,7 +79,6 @@ If you use YOLOv5 in your research or development, please cite it as follows:
 }
   - **Streamlit**: For enabling rapid development of interactive web applications.
   - **Contributors**: Everyone who has contributed to improving this project.
-
 
 ## Future Work
   - Expand Pest Library: Incorporate additional pest species to enhance the system's utility.
